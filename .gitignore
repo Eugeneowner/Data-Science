@@ -1,0 +1,70 @@
+# -------------------------
+# Python
+# -------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+*.py,cover
+.cache/
+pytest_cache/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# IDE / Editor settings
+.vscode/
+.idea/
+
+# macOS system files
+.DS_Store
+
+# Environment files
+*.env
+.env
+
+# MyPy / static analysis
+.mypy_cache/
+.pyre/
+
+# Local data files (optional)
+data/
+*.csv
+*.tsv
+
+# Ignore compiled models or large ML artifacts
+models/
+checkpoints/
+
+# If using Hugging Face datasets/models
+huggingface_cache/
