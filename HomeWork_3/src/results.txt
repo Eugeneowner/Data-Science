@@ -1,0 +1,24 @@
+Students results:
+Student 1: 77 - Passed
+Student 2: 83 - Failed
+Student 3: 87 - Passed
+Student 4: 55 - Failed
+Student 5: 86 - Passed
+Student 6: 71 - Failed
+Student 7: 83 - Passed
+Student 8: 77 - Passed
+Student 9: 100 - Passed
+Student 10: 67 - Passed
+Student 11: 88 - Failed
+Student 12: 89 - Failed
+Student 13: 95 - Passed
+Student 14: 86 - Failed
+Student 15: 69 - Passed
+Student 16: 55 - Failed
+Student 17: 77 - Passed
+Student 18: 82 - Failed
+Student 19: 79 - Passed
+Student 20: 77 - Passed
+
+Professor consistency check:
+Inconsistent
