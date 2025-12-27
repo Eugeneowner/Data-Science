@@ -4,15 +4,15 @@ def simplePrimeSearch(n: int) -> dict[int, bool]:
     primes = {}
 
     for number in range(2, n + 1):
-        is_prime = True
+        isPrime = True
         d = 2
         while d * d <= number:
             if number % d == 0:
-                is_prime = False
+                isPrime = False
                 break
             d += 1
 
-        primes[number] = is_prime
+        primes[number] = isPrime
 
     return primes
 
