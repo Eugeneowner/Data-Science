@@ -62,7 +62,6 @@ def run(
         dpi=dpi,
     )
 
-    # Spearman WITHOUT scipy
     country_rank_by_mean = country_mean.rank(method="average", ascending=True)
     tdf["country_rank"] = tdf["country_of_origin"].map(country_rank_by_mean)
 
