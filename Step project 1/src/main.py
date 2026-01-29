@@ -1,153 +1,80 @@
-# ============================================================
-# Homework: Movies dataset analysis with pandas
-# ============================================================
+# src/main.py
 
-import os
-import requests
-import pandas as pd
+from __future__ import annotations
 
-# ============================================================
-# SETTINGS
-# ============================================================
-
-FILE_NAME = "movies.csv"
-DATA_URL = (
-    "https://gist.githubusercontent.com/tiangechen/"
-    "b68782efa49a16edaf07dc2cdaa855ea/raw/"
-    "0c794a9717f18b094eabab2cd6a6b9a226903577/movies.csv"
+from config import (
+    FILE_NAME, DATA_URL, TIMEOUT_SEC,
+    TOP_N,
+    SHOW_PLOTS, SAVE_PLOTS, PLOTS_DIR, DPI,
+    CORR_METHOD, STRONG_CORR_THRESHOLD, EXCLUDED_ATTRS, QUALITY_ATTRIBUTES,
+    ALT_COL_CANDIDATES, PLOT_XLIM, SCORE_BAND, ALT_BAND, KDE_GRID_SIZE, KDE_SIGMA_BINS,
 )
 
-# ============================================================
-# 1. DOWNLOAD DATASET (IF NOT EXISTS)
-# ============================================================
+from data.loader import download_if_missing, load_dataset
 
-if not os.path.exists(FILE_NAME):
-    response = requests.get(DATA_URL, timeout=60)
+from tasks.task1_top_countries import run as task1_run
+from tasks.task2_correlations import run as task2_run
+from tasks.task3_species_color import run as task3_run
+from tasks.task4_country_quality import run as task4_run
+from tasks.task5_altitude_quality import run as task5_run
 
-    if response.status_code == 200:
-        with open(FILE_NAME, "wb") as f:
-            f.write(response.content)
-        print("movies.csv downloaded successfully")
-    else:
-        raise RuntimeError(
-            f"Failed to download file. Status code: {response.status_code}"
-        )
-else:
-    print("movies.csv already exists")
 
-# ============================================================
-# LOAD DATA INTO PANDAS
-# ============================================================
+def main() -> None:
+    download_if_missing(FILE_NAME, DATA_URL, timeout_sec=TIMEOUT_SEC)
+    df = load_dataset(FILE_NAME)
 
-# Required: using read_table
-df = pd.read_table(FILE_NAME, sep=",")
+    task1_run(
+        df,
+        top_n=TOP_N,
+        save_plots=SAVE_PLOTS,
+        show_plots=SHOW_PLOTS,
+        plots_dir=PLOTS_DIR,
+        dpi=DPI,
+    )
 
-# Remove duplicate rows
-df = df.drop_duplicates()
+    task2_run(
+        df,
+        attributes=QUALITY_ATTRIBUTES,
+        excluded=EXCLUDED_ATTRS,
+        threshold=STRONG_CORR_THRESHOLD,
+        method=CORR_METHOD,
+        save_plots=SAVE_PLOTS,
+        show_plots=SHOW_PLOTS,
+        plots_dir=PLOTS_DIR,
+        dpi=DPI,
+    )
 
-# ============================================================
-# 2. DATA STRUCTURE AND STATISTICS
-# ============================================================
+    task3_run(
+        df,
+        save_plots=SAVE_PLOTS,
+        show_plots=SHOW_PLOTS,
+        plots_dir=PLOTS_DIR,
+        dpi=DPI,
+    )
 
-print("\n--- Columns ---")
-print(df.columns)
+    task4_run(
+        df,
+        top_n=20,
+        save_plots=SAVE_PLOTS,
+        show_plots=SHOW_PLOTS,
+        plots_dir=PLOTS_DIR,
+        dpi=DPI,
+    )
 
-print("\n--- Data types ---")
-print(df.dtypes)
+    task5_run(
+        df,
+        alt_col_candidates=ALT_COL_CANDIDATES,
+        plot_xlim=PLOT_XLIM,
+        score_band=SCORE_BAND,
+        alt_band=ALT_BAND,
+        kde_grid_size=KDE_GRID_SIZE,
+        kde_sigma_bins=KDE_SIGMA_BINS,
+        save_plots=SAVE_PLOTS,
+        show_plots=SHOW_PLOTS,
+        plots_dir=PLOTS_DIR,
+        dpi=DPI,
+    )
 
-print("\n--- DataFrame info() ---")
-df.info()
 
-print("\n--- DataFrame describe() ---")
-print(df.describe())
-
-# ============================================================
-# 3. TOTAL NUMBER OF MOVIES (5 METHODS)
-# ============================================================
-
-print("\n--- Total number of movies ---")
-
-print("Method 1 (unique):", len(df["Film"].unique()))
-print("Method 2 (len):", len(df))
-print("Method 3 (count):", df["Film"].count())
-print("Method 4 (value_counts):", df["Film"].value_counts().count())
-print("Method 5 (shape):", df.shape[0])
-
-# ============================================================
-# 4. MOVIES COUNT PER YEAR (5 METHODS)
-# ============================================================
-
-print("\n--- Movies per year ---")
-
-print("\nMethod 1 (value_counts):")
-print(df["Year"].value_counts().sort_index())
-
-print("\nMethod 2 (groupby + agg):")
-print(
-    df.groupby("Year")
-      .agg(movie_count=("Film", "count"))
-      .sort_values("movie_count", ascending=False)
-)
-
-print("\nMethod 3 (groupby + count):")
-print(df.groupby("Year")["Film"].count())
-
-print("\nMethod 4 (groupby + count + loc):")
-print(df.groupby("Year").count().loc[:, ["Film"]])
-
-print("\nMethod 5 (loop):")
-for year in sorted(df["Year"].unique()):
-    print(f"{year} : {len(df[df['Year'] == year])}")
-
-# ============================================================
-# 5. MOST AND LEAST PROFITABLE MOVIES
-# ============================================================
-
-print("\n--- Most profitable movie ---")
-max_profit = df["Profitability"].max()
-print(df[df["Profitability"] == max_profit])
-
-print("\n--- Least profitable movies ---")
-min_profit = df["Profitability"].min()
-print(df[df["Profitability"] == min_profit])
-
-print("\n--- Alternative (isin) ---")
-print(df.loc[df["Profitability"].isin([max_profit, min_profit])])
-
-# ============================================================
-# 6. FIX GENRE INCONSISTENCIES
-# ============================================================
-
-print("\n--- Unique genres BEFORE ---")
-print(df["Genre"].unique())
-
-# Normalize genre values
-df["Genre"] = (
-    df["Genre"]
-    .str.strip()
-    .str.lower()
-    .replace({
-        "romence": "romance",
-        "comdy": "comedy"
-    })
-)
-
-print("\n--- Unique genres AFTER ---")
-print(df["Genre"].unique())
-
-# ============================================================
-# 7. TOP 10 COMEDIES BY AUDIENCE SCORE
-# ============================================================
-
-top_10_comedies = (
-    df[df["Genre"] == "comedy"]
-    .sort_values("Audience score %", ascending=False)
-    .head(10)
-    .loc[:, ["Film", "Year", "Lead Studio"]]
-)
-
-print("\n--- Top 10 comedies ---")
-print(top_10_comedies)
-
-top_10_comedies.to_csv("top_10_comedies.csv", index=False)
-print("\nSaved to top_10_comedies.csv")
+if __name__ == "__main__":
+    main()
