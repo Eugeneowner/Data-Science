@@ -1,5 +1,3 @@
-# src/main.py
-
 from __future__ import annotations
 
 from config import (
@@ -23,14 +21,7 @@ def main() -> None:
     download_if_missing(FILE_NAME, DATA_URL, timeout_sec=TIMEOUT_SEC)
     df = load_dataset(FILE_NAME)
 
-    task1_run(
-        df,
-        top_n=TOP_N,
-        save_plots=SAVE_PLOTS,
-        show_plots=SHOW_PLOTS,
-        plots_dir=PLOTS_DIR,
-        dpi=DPI,
-    )
+    task1_run(df, top_n=TOP_N, save_plots=SAVE_PLOTS, show_plots=SHOW_PLOTS, plots_dir=PLOTS_DIR, dpi=DPI)
 
     task2_run(
         df,
@@ -44,22 +35,9 @@ def main() -> None:
         dpi=DPI,
     )
 
-    task3_run(
-        df,
-        save_plots=SAVE_PLOTS,
-        show_plots=SHOW_PLOTS,
-        plots_dir=PLOTS_DIR,
-        dpi=DPI,
-    )
+    task3_run(df, save_plots=SAVE_PLOTS, show_plots=SHOW_PLOTS, plots_dir=PLOTS_DIR, dpi=DPI)
 
-    task4_run(
-        df,
-        top_n=20,
-        save_plots=SAVE_PLOTS,
-        show_plots=SHOW_PLOTS,
-        plots_dir=PLOTS_DIR,
-        dpi=DPI,
-    )
+    task4_run(df, top_n=20, save_plots=SAVE_PLOTS, show_plots=SHOW_PLOTS, plots_dir=PLOTS_DIR, dpi=DPI)
 
     task5_run(
         df,
