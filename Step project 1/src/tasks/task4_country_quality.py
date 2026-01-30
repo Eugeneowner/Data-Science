@@ -3,9 +3,9 @@ from __future__ import annotations
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from utils.validate import require_columns
-from utils.plot import annotate_barh, finalize_figure
-from utils.stats import spearman_corr_no_scipy
+from src.utils.validate import require_columns
+from src.utils.plot import annotate_barh, finalize_figure
+from src.utils.stats import spearman_corr_no_scipy
 
 
 def run(

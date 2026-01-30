@@ -3,9 +3,8 @@ from __future__ import annotations
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from utils.validate import require_columns
-from utils.plot import finalize_figure
-
+from src.utils.validate import require_columns, clean_string_column
+from src.utils.plot import annotate_barh, finalize_figure
 
 def run(
     df: pd.DataFrame,
