@@ -86,3 +86,12 @@
 
 **Використання кольорових палітр** обовʼязкове для кращого візуального розрізнення.
 
+# Step Project 1 — Coffee Ratings Analysis
+
+## Description
+Analysis of coffee quality ratings dataset using Python.
+
+## How to run
+```bash
+cd "Step project 1"
+python3 -m src.main

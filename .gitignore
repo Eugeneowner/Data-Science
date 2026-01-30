@@ -20,10 +20,6 @@ dist/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# PyInstaller
-*.manifest
-*.spec
-
 # Unit test / coverage reports
 htmlcov/
 .tox/
@@ -49,22 +45,14 @@ pytest_cache/
 # macOS system files
 .DS_Store
 
-# Environment files
-*.env
-.env
-
 # MyPy / static analysis
 .mypy_cache/
 .pyre/
 
-# Local data files (optional)
-data/
-*.csv
-*.tsv
+# -------------------------
+# Data / outputs
+# -------------------------
+# If you don't want to store datasets:
+# *.csv
+# *.tsv
 
-# Ignore compiled models or large ML artifacts
-models/
-checkpoints/
-
-# If using Hugging Face datasets/models
-huggingface_cache/
