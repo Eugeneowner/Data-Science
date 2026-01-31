@@ -91,6 +91,35 @@
 ## Description
 Analysis of coffee quality ratings dataset using Python.
 
+# Step Project 1 — Coffee Ratings Analysis (Pandas + Matplotlib / Seaborn)
+
+## 1. Project goal
+The goal of this project is to analyze the Coffee Quality Institute dataset (TidyTuesday: Coffee Ratings) using **pandas** for data processing and **matplotlib/seaborn** for visualization.
+
+We answer the following questions:
+1. Which countries can be considered the largest coffee exporters (using dataset proxies)?
+2. What correlations exist between coffee quality attributes?
+3. Is there any effect of bean color on total cup score (within species)?
+4. Does country of origin influence coffee quality?
+5. Does altitude influence coffee quality (visual density analysis)?
+
+Dataset source:
+- `coffee_ratings.csv` from TidyTuesday (2020-07-07)
+
+---
+
+## 2. Environment / requirements
+- Python 3.x
+- pandas
+- numpy
+- matplotlib
+- requests
+- seaborn (used for Task 5 KDE plot)
+
+Install:
+```bash
+pip install pandas numpy matplotlib requests seaborn
+
 ## How to run
 ```bash
 cd "Step project 1"
